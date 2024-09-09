@@ -1,0 +1,22 @@
+/* HeroSection.css */
+.hero-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 40px 20px;
+  background-color: #e0e0e0;
+}
+
+.hero-content {
+  max-width: 50%;
+}
+
+.hero-content h1 {
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+.hero-image img {
+  max-width: 100%;
+  height: auto;
+}
