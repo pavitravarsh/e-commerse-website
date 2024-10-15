@@ -1,0 +1,66 @@
+/* Navbar.css */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background-color: white;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.logo {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.nav-links {
+  list-style-type: none;
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links li a {
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.nav-links li a:hover {
+  color: #856135; /* Adjust to match your theme */
+}
+
+form {
+  position: relative;
+  background: #f6f5f2;
+  border-radius: 60px;
+  padding: 10px 20px;
+}
+
+form input {
+  background: transparent;
+  border: none;
+  color: #8b8882;
+  outline: none;
+  padding: 5px;
+  font-size: 16px;
+}
+
+form input::placeholder {
+  color: #8b8882;
+  opacity: 0.7;
+}
+
+#search {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #8b8882;
+  margin-left: 10px;
+}
+
+#search:hover {
+  color: #513200; /* Adjust hover color as needed */
+}
