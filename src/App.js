@@ -6,6 +6,7 @@ import MissionSection from "./components/MissionSection";
 import ProductsSection from "./components/ProductsSection";
 import InfoSection from "./components/InfoSection";
 import Footer from "./components/Footer";
+import SignIn from "./components/SignIn";
 import "./App.css";
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         <Route path="/shop" element={<ProductsSection />} />
         <Route path="/our-story" element={<InfoSection />} />
         <Route path="/editorial" element={<MissionSection />} />
+        <Route path="/signin" element={<SignIn />} />
       </Routes>
       <Footer />
     </Router>

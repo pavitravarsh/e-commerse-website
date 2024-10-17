@@ -1,0 +1,140 @@
+/* src/components/styles/SignIn.css */
+
+.sign-in-container {
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 2rem;
+  background-color: #fafafa; /* Softer background color */
+  border-radius: 12px; /* Increased the border radius for softer edges */
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1); /* Added a subtle shadow */
+  transition: all 0.3s ease; /* Smooth transition for hover effects */
+}
+
+.sign-in-container:hover {
+  box-shadow: 0px 12px 20px rgba(0, 0, 0, 0.15); /* Hover effect to enhance focus */
+}
+
+.sign-in-container h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-family: "Poppins", sans-serif; /* Added a modern font */
+  color: #333;
+  font-size: 1.75rem;
+  font-weight: 600;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.75rem; /* Increased padding for better readability */
+  margin-top: 0.25rem;
+  border: 1px solid #ccc;
+  border-radius: 8px; /* Softer rounded edges */
+  background-color: #f9f9f9; /* Light background */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input:focus {
+  border-color: #666; /* Modern purple for focus */
+  box-shadow: 0 0 8px rgba(108, 99, 255, 0.2); /* Soft glow on focus */
+  outline: none;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.form-actions button {
+  padding: 0.75rem 1.5rem;
+  background-color: #666; /* Changed to a modern purple */
+  color: white;
+  border: none;
+  border-radius: 8px; /* Rounded corners for better UI */
+  cursor: pointer;
+  font-family: "Poppins", sans-serif; /* Use the same font family */
+  transition: background-color 0.3s ease;
+}
+
+.form-actions button:hover {
+  background-color: #666; /* Slightly darker hover color */
+}
+
+.google-signin-btn {
+  margin-top: 10px;
+  background-color: #666;
+  color: white;
+  font-size: 0.9rem;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 8px;
+  width: 100%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.google-signin-btn:hover {
+  background-color: #666;
+}
+
+.toggle-container {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.toggle-container button {
+  padding: 0.5rem;
+  background-color: transparent;
+  color: #666; /* Use theme color */
+  border: none;
+  cursor: pointer;
+  font-family: "Poppins", sans-serif; /* Use the same font family */
+  text-decoration: underline;
+  transition: color 0.3s ease;
+}
+
+.toggle-container button:hover {
+  color: #9895b7; /* Hover effect */
+}
+
+.error {
+  color: red;
+  margin-bottom: 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.google-signin-btn {
+  margin-top: 10px;
+  background-color: #4285f4;
+  color: white;
+  font-size: 0.9rem;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 8px;
+  width: 100%;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s ease;
+}
+
+.google-signin-btn svg {
+  margin-right: 8px;
+}
+
+.google-signin-btn:hover {
+  background-color: #357ae8;
+}

@@ -17,15 +17,21 @@ function Header() {
             <a href="#">Editorial</a>
           </li>
         </ul>
-        <form action="/search" method="get">
-          <input type="text" name="q" placeholder="Search..." />
-          <i
-            type="submit"
-            id="search"
-            className="fa-solid fa-magnifying-glass"
-          ></i>
+
+        {/* Search form with a submit button */}
+        <form action="/search" method="get" className="search-container">
+          <input
+            type="text"
+            name="q"
+            className="search-input"
+            placeholder="Search..."
+          />
+          <button type="submit" className="search-button">
+            <i className="fa-solid fa-magnifying-glass"></i>
+          </button>
         </form>
-        <button class="signin">SIGN IN</button>
+
+        <button className="signin">SIGN IN</button>
       </nav>
     </header>
   );

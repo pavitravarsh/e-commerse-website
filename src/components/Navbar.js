@@ -28,6 +28,10 @@ const Navbar = () => {
           <li>
             <Link to="/editorial">Editorial</Link>
           </li>
+          <li>
+            <Link to="/signin">Sign In</Link>
+          </li>{" "}
+          {/* Add this line for Sign In */}
         </ul>
         <form onSubmit={handleSearch}>
           <input
