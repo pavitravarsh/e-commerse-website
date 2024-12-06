@@ -14,7 +14,17 @@ function App() {
     <Router>
       <Navbar />
       <Routes>
-        <Route path="/" element={<HeroSection />} />
+        <Route
+          path="/"
+          element={
+            <>
+              <HeroSection />
+              <ProductsSection />
+              <MissionSection />
+              <InfoSection />
+            </>
+          }
+        />
         <Route path="/shop" element={<ProductsSection />} />
         <Route path="/our-story" element={<InfoSection />} />
         <Route path="/editorial" element={<MissionSection />} />
