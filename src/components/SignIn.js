@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -9,6 +9,7 @@ import {
 import app from "./firebaseConfig"; // Import the initialized Firebase app
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // Font Awesome Icon
 import { faGoogle } from "@fortawesome/free-brands-svg-icons"; // Google Icon
+import { useNavigate } from "react-router-dom"; // For redirecting after login
 import "./styles/SignIn.css"; // Your CSS for styling
 
 const SignIn = () => {
@@ -17,9 +18,20 @@ const SignIn = () => {
   const [confirmPassword, setConfirmPassword] = useState(""); // For confirming password in sign-up
   const [isNewUser, setIsNewUser] = useState(false); // Track if it's a new user
   const [error, setError] = useState(""); // Track error messages
+  const [success, setSuccess] = useState(""); // Track success messages
 
-  // Get the authentication instance from the initialized Firebase app
   const auth = getAuth(app);
+  const navigate = useNavigate(); // Hook for navigation
+
+  // Redirect after successful login/signup
+  useEffect(() => {
+    if (success) {
+      // Redirect to home ("/") after success
+      setTimeout(() => {
+        navigate("/"); // Redirect to home page after success
+      }, 2000); // Delay the redirection by 2 seconds to show the success message
+    }
+  }, [success, navigate]);
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -36,6 +48,7 @@ const SignIn = () => {
         .then((userCredential) => {
           console.log("User signed up:", userCredential.user);
           setError(""); // Clear any previous errors
+          setSuccess("Sign-up successful! Redirecting...");
         })
         .catch((error) => {
           console.error("Error signing up:", error.message);
@@ -46,6 +59,15 @@ const SignIn = () => {
       signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           console.log("User logged in:", userCredential.user);
+          const user = userCredential.user;
+
+          user.getIdTokenResult().then((idTokenResult) => {
+            if (idTokenResult.claims.admin) {
+              setSuccess("Welcome Admin! Redirecting...");
+            } else {
+              setSuccess("Login successful! Redirecting...");
+            }
+          });
           setError(""); // Clear any previous errors
         })
         .catch((error) => {
@@ -61,6 +83,16 @@ const SignIn = () => {
       .then((result) => {
         console.log("User signed in with Google:", result.user);
         setError(""); // Clear errors
+        setSuccess("Google Sign-In successful! Redirecting...");
+
+        const user = result.user;
+        user.getIdTokenResult().then((idTokenResult) => {
+          if (idTokenResult.claims.admin) {
+            setSuccess("Google Admin logged in! Redirecting...");
+          } else {
+            setSuccess("Google user logged in! Redirecting...");
+          }
+        });
       })
       .catch((error) => {
         console.error("Error with Google Sign-In:", error.message);
@@ -108,6 +140,7 @@ const SignIn = () => {
           </div>
         )}
         {error && <p style={{ color: "red" }}>{error}</p>}
+        {success && <p style={{ color: "green" }}>{success}</p>}
         <div className="form-actions">
           <button type="submit">{isNewUser ? "Sign Up" : "Sign In"}</button>
         </div>
@@ -127,6 +160,7 @@ const SignIn = () => {
           onClick={() => {
             setIsNewUser(!isNewUser);
             setError(""); // Clear errors when toggling
+            setSuccess(""); // Clear success message when toggling
           }}
         >
           {isNewUser ? "Log In" : "Create Account"}

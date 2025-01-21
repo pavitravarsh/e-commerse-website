@@ -1,4 +1,4 @@
-/* Navbar.css */
+/* Navbar styling */
 .navbar {
   display: flex;
   align-items: center;
@@ -19,6 +19,8 @@
   list-style-type: none;
   display: flex;
   gap: 20px;
+  flex-grow: 1; /* Ensures nav links take up available space */
+  justify-content: center; /* Center the nav links */
 }
 
 .nav-links li a {
@@ -37,6 +39,7 @@ form {
   background: #f6f5f2;
   border-radius: 60px;
   padding: 10px 20px;
+  margin-right: 10px; /* Move search bar a little left */
 }
 
 form input {
@@ -63,4 +66,95 @@ form input::placeholder {
 
 #search:hover {
   color: #513200; /* Adjust hover color as needed */
+}
+
+/* Account Logo and Dropdown */
+.account-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+}
+
+.account-logo {
+  width: 35px;
+  height: 35px;
+  background-color: #856135; /* Background color of the account logo */
+  color: white;
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+}
+
+.account-logo:hover {
+  background-color: #513200; /* Adjust hover color as needed */
+}
+
+/* Dropdown */
+.dropdown-menu {
+  position: absolute;
+  top: 45px;
+  right: 0;
+  background-color: #856135;
+  border-radius: 5px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 150px;
+}
+
+.dropdown-item {
+  background: none;
+  border: none;
+  padding: 8px 15px;
+  text-align: left;
+  cursor: pointer;
+  width: 100%;
+}
+
+.dropdown-item:hover {
+  background-color: #513200;
+  color: #fff;
+  border-radius: 5px;
+}
+
+/* Cart Icon */
+.cart-icon {
+  position: relative;
+  cursor: pointer;
+  margin-right: 20px;
+}
+
+.cart-icon i {
+  font-size: 20px;
+  color: #856135; /* Matches the theme */
+  transition: color 0.3s ease;
+}
+
+.cart-icon:hover i {
+  color: #513200; /* Darker shade for hover */
+}
+
+/* Cart Badge */
+.cart-badge {
+  position: absolute;
+  top: -5px;
+  right: -10px;
+  background-color: #856135; /* Matches the theme */
+  color: white;
+  border-radius: 50%;
+  padding: 3px 6px;
+  font-size: 12px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cart-badge:hover {
+  background-color: #513200; /* Darker hover effect */
 }

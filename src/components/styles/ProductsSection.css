@@ -30,3 +30,24 @@
   font-size: 16px;
   color: #333;
 }
+
+/* Individual category section */
+.category-section {
+  margin-bottom: 40px;
+}
+
+/* Category title */
+.category-section h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+} /* Horizontal product list */
+
+.product-list {
+  display: flex; /* Makes the product list horizontal */
+  gap: 20px; /* Space between products */
+  overflow-x: auto; /* Adds horizontal scrolling if there are too many products */
+  padding-bottom: 10px; /* Space for scroll bar */
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
