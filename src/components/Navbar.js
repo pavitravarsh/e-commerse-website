@@ -1,53 +1,48 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { getAuth, onAuthStateChanged, signOut } from "firebase/auth"; // Firebase Auth services
-import app from "./firebaseConfig"; // Firebase config file with app initialization
-import "./styles/Navbar.css"; // Add your custom CSS for Navbar
+import React, { useState, useEffect, useRef } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import app from "./firebaseConfig";
+import "./styles/Navbar.css";
 
-const Navbar = () => {
-  const [query, setQuery] = useState(""); // Search query state
-  const [isDropdownOpen, setDropdownOpen] = useState(false); // State for dropdown visibility
-  const [userName, setUserName] = useState(null); // User's full name from Firebase
-  const [userInitial, setUserInitial] = useState(null); // User's initial (first letter of name)
+const Navbar = ({ cartItemCount = 0 }) => {
+  const [query, setQuery] = useState("");
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const [userName, setUserName] = useState(null);
+  const [userInitial, setUserInitial] = useState(null);
 
-  // Fetch user data from Firebase when the component mounts
+  const dropdownRef = useRef(null);
+  const navigate = useNavigate();
+
   useEffect(() => {
-    const auth = getAuth(app); // Get Firebase Auth instance
+    const auth = getAuth(app);
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        setUserName(user.displayName || user.email); // Set user name or email if logged in
+        setUserName(user.displayName || user.email);
         setUserInitial(
           user.displayName
             ? user.displayName.charAt(0).toUpperCase()
             : user.email.charAt(0).toUpperCase()
-        ); // Set the initial letter of the user
+        );
       } else {
-        setUserName(null); // Reset userName and initial if not logged in
+        setUserName(null);
         setUserInitial(null);
       }
     });
 
-    return () => unsubscribe(); // Cleanup subscription on unmount
+    return () => unsubscribe();
   }, []);
 
-  // Handle search functionality
   const handleSearch = (e) => {
     e.preventDefault();
     console.log("Searching for:", query);
-    // Implement your search functionality here
+    navigate(`/search?q=${query}`);
   };
 
-  // Toggle dropdown visibility
-  const toggleDropdown = () => {
-    setDropdownOpen(!isDropdownOpen);
-  };
-
-  // Handle user logout
   const handleLogout = () => {
-    const auth = getAuth(app); // Get Firebase Auth instance
+    const auth = getAuth(app);
     signOut(auth)
       .then(() => {
-        setUserName(null); // Clear username and initial after logout
+        setUserName(null);
         setUserInitial(null);
       })
       .catch((error) => {
@@ -64,21 +59,45 @@ const Navbar = () => {
         {/* Navigation Links */}
         <ul className="nav-links">
           <li>
-            <Link to="/">Home</Link>
+            <NavLink
+              to="/"
+              className={({ isActive }) => (isActive ? "active-link" : "")}
+            >
+              Home
+            </NavLink>
           </li>
           <li>
-            <Link to="/shop">Shop</Link>
+            <NavLink
+              to="/shop"
+              className={({ isActive }) => (isActive ? "active-link" : "")}
+            >
+              Shop
+            </NavLink>
           </li>
           <li>
-            <Link to="/our-story">Our Story</Link>
+            <NavLink
+              to="/our-story"
+              className={({ isActive }) => (isActive ? "active-link" : "")}
+            >
+              Our Story
+            </NavLink>
           </li>
           <li>
-            <Link to="/editorial">Editorial</Link>
+            <NavLink
+              to="/editorial"
+              className={({ isActive }) => (isActive ? "active-link" : "")}
+            >
+              Editorial
+            </NavLink>
           </li>
-          {/* Sign In link when not logged in */}
           {!userName && (
             <li>
-              <Link to="/signin">Sign In</Link>
+              <NavLink
+                to="/signin"
+                className={({ isActive }) => (isActive ? "active-link" : "")}
+              >
+                Sign In
+              </NavLink>
             </li>
           )}
         </ul>
@@ -99,20 +118,32 @@ const Navbar = () => {
           ></button>
         </form>
 
+        {/* Cart Icon */}
+        <div className="cart-icon" onClick={() => navigate("/cart")}>
+          <i className="fa fa-shopping-cart"></i>
+          {cartItemCount > 0 && (
+            <span className="cart-badge">{cartItemCount}</span>
+          )}
+        </div>
+
         {/* Account Container (Dropdown) */}
-        <div className="account-container" onClick={toggleDropdown}>
+        <div
+          className="account-container"
+          onClick={() => setDropdownOpen((prev) => !prev)}
+          ref={dropdownRef}
+        >
           <div className="account-logo">
-            {/* Display user's initial or default user icon */}
             {userInitial ? (
               <span className="user-initial">{userInitial}</span>
             ) : (
-              <i className="fa fa-user"></i> // Default icon if no user logged in
+              <i className="fa fa-user"></i>
             )}
           </div>
 
           {/* Dropdown Menu */}
           {isDropdownOpen && userName && (
             <div className="dropdown-menu">
+              <p className="dropdown-item">{userName}</p>
               <button className="dropdown-item" onClick={handleLogout}>
                 Logout
               </button>
