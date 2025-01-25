@@ -1,14 +1,18 @@
 import React, { useState, useEffect, useRef } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { useCart } from "./CartContext"; // Import the custom hook for cart context
 import app from "./firebaseConfig";
 import "./styles/Navbar.css";
 
-const Navbar = ({ cartItemCount = 0 }) => {
+const Navbar = () => {
   const [query, setQuery] = useState("");
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [userName, setUserName] = useState(null);
   const [userInitial, setUserInitial] = useState(null);
+
+  const { cart } = useCart(); // Access the cart state
+  const cartItemCount = cart.length; // Get the number of items in the cart
 
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
@@ -34,7 +38,6 @@ const Navbar = ({ cartItemCount = 0 }) => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    console.log("Searching for:", query);
     navigate(`/search?q=${query}`);
   };
 
