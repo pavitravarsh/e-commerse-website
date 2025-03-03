@@ -10,23 +10,32 @@ function ProductsSection() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/products")
+      .get("https://snail-backend.onrender.com/api/products") // Fetch products
       .then((response) => {
-        setProducts(response.data);
+        console.log("API Response:", response.data);
+        setProducts(response.data || []);
         setLoading(false);
       })
-      .catch(() => {
-        setError("Error fetching products!");
+      .catch((err) => {
+        console.error("Error fetching products:", err);
+        setError("Failed to load products. Please try again later.");
         setLoading(false);
       });
   }, []);
 
   if (loading) return <p>Loading products...</p>;
-  if (error) return <p>{error}</p>;
+  if (error) return <p className="error-message">{error}</p>;
 
+  // Group products by category and remove duplicates
   const groupedProducts = products.reduce((acc, product) => {
-    acc[product.category] = acc[product.category] || [];
-    acc[product.category].push(product);
+    const category = product.category?.trim() || "Uncategorized";
+    if (!acc[category]) acc[category] = new Map(); // Use Map to prevent duplicates
+
+    // Ensure unique products based on `_id`
+    if (!acc[category].has(product._id)) {
+      acc[category].set(product._id, product);
+    }
+
     return acc;
   }, {});
 
@@ -36,26 +45,38 @@ function ProductsSection() {
         <div key={category} className="category-section">
           <h2>{category} Products</h2>
           <div className="product-list">
-            {categoryProducts.map((product) => (
-              <Link
-                to={`/product/${product._id}`}
-                key={product._id}
-                className="product"
-              >
-                <img
-                  src={product.src}
-                  alt={product.alt || "Product"}
-                  onError={(e) => (e.target.src = "/placeholder-image.jpg")}
-                />
-                <h3>{product.name}</h3>
-                <p>
-                  {new Intl.NumberFormat("en-IN", {
+            {[...categoryProducts.values()].map((product) => {
+              // Extract numeric price safely
+              const numericPrice = product.price
+                ? parseFloat(product.price.replace(/[^\d.]/g, ""))
+                : NaN;
+              const price = !isNaN(numericPrice)
+                ? new Intl.NumberFormat("en-IN", {
                     style: "currency",
                     currency: "INR",
-                  }).format(product.price)}
-                </p>
-              </Link>
-            ))}
+                  }).format(numericPrice)
+                : "N/A";
+
+              return (
+                <Link
+                  to={`/product/${product._id}`}
+                  key={product._id}
+                  className="product"
+                >
+                  <img
+                    src={
+                      product.src && product.src.trim()
+                        ? product.src
+                        : "/placeholder-image.jpg"
+                    }
+                    alt={product.alt || "Product Image"}
+                    onError={(e) => (e.target.src = "/placeholder-image.jpg")}
+                  />
+                  <h3>{product.name || "Unnamed Product"}</h3>
+                  <p>Price: {price}</p>
+                </Link>
+              );
+            })}
           </div>
         </div>
       ))}
