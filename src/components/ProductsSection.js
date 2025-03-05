@@ -23,7 +23,7 @@ function ProductsSection() {
       });
   }, []);
 
-  if (loading) return <p>Loading products...</p>;
+  if (loading) return <p>Loading products..</p>;
   if (error) return <p className="error-message">{error}</p>;
 
   // Group products by category and remove duplicates
