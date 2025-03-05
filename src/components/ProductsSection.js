@@ -43,10 +43,11 @@ function ProductsSection() {
                 className="product"
               >
                 <img
-                  src={product.src}
-                  alt={product.alt || "Product"}
+                  src={product.src ? product.src : "/placeholder-image.jpg"}
+                  alt={product.alt || "Product Image"}
                   onError={(e) => (e.target.src = "/placeholder-image.jpg")}
                 />
+
                 <h3>{product.name}</h3>
                 <p>
                   {new Intl.NumberFormat("en-IN", {

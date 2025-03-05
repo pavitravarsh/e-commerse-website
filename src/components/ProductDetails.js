@@ -2,47 +2,57 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useCart } from "./CartContext"; // Import the useCart hook
-import "./styles/ProductDetails.css"; // Import styles if you have them
+import "./styles/ProductDetails.css"; // Import styles
 
 const ProductDetails = () => {
-  const { id } = useParams(); // Get the product ID from the URL
-  const [product, setProduct] = useState(null); // State to store product details
-  const [loading, setLoading] = useState(true); // Loading state
-  const [error, setError] = useState(null); // Error state
-  const { addToCart } = useCart(); // Destructure addToCart from the CartContext
+  const { id } = useParams();
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [showPopup, setShowPopup] = useState(false); // Popup state
+  const { addToCart } = useCart(); // Get addToCart function
 
   useEffect(() => {
-    // Fetch product details using the product ID
     axios
-      .get(`https://snail-backend.onrender.com/api/products`)
+      .get(`https://snail-backend.onrender.com/api/products/${id}`)
       .then((response) => {
-        setProduct(response.data); // Set the fetched product to state
-        setLoading(false); // Set loading to false
+        console.log("Fetched Product:", response.data); // Debugging
+        setProduct(response.data);
+        setLoading(false);
       })
-      .catch(() => {
-        setError("Failed to load product details."); // Handle errors
+      .catch((err) => {
+        console.error("Error fetching product details:", err);
+        setError("Failed to load product details.");
         setLoading(false);
       });
   }, [id]);
 
-  // Handle loading state
-  if (loading) return <p>Loading product details...</p>;
+  const handleAddToCart = () => {
+    if (product) {
+      addToCart({ ...product }); // Ensure a new object is passed to prevent reference issues
+      setShowPopup(true); // Show popup
 
-  // Handle error state
+      // Hide popup after 2 seconds
+      setTimeout(() => {
+        setShowPopup(false);
+      }, 2000);
+    }
+  };
+
+  if (loading) return <p>Loading product details...</p>;
   if (error) return <p>{error}</p>;
+  if (!product) return <p>Product not found.</p>;
 
   return (
     <div className="product-details">
-      {/* Left Section: Product Image */}
       <div className="product-image">
         <img
-          src={product.imageUrl}
+          src={product.src ? product.src : "/placeholder-image.jpg"}
           alt={product.alt || "Product Image"}
-          onError={(e) => (e.target.src = "/placeholder-image.jpg")} // Fallback image
+          onError={(e) => (e.target.src = "/placeholder-image.jpg")}
         />
       </div>
 
-      {/* Right Section: Product Details */}
       <div className="product-info">
         <h1>{product.name}</h1>
         <p className="price">
@@ -51,16 +61,16 @@ const ProductDetails = () => {
             currency: "INR",
           }).format(product.price)}
         </p>
-        <p className="description">{product.description}</p>
-        <button onClick={() => addToCart(product)}>Add to Cart</button>{" "}
-        {/* Add to Cart button */}
+        <p className="description">
+          {product.description || "No description available."}
+        </p>
+        <button onClick={handleAddToCart}>Add to Cart</button>
       </div>
 
-      {/* Optional: Reviews Section */}
-      <div className="product-reviews">
-        <h2>Product Reviews</h2>
-        <p>No reviews yet. Be the first to review this product!</p>
-      </div>
+      {/* Popup Message */}
+      {showPopup && (
+        <div className="cart-popup">{product.name} added to cart!</div>
+      )}
     </div>
   );
 };
