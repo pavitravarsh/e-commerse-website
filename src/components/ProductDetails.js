@@ -14,7 +14,7 @@ const ProductDetails = () => {
   useEffect(() => {
     // Fetch product details using the product ID
     axios
-      .get(`http://localhost:5000/api/products/${id}`)
+      .get(`https://snail-backend.onrender.com/api/products`)
       .then((response) => {
         setProduct(response.data); // Set the fetched product to state
         setLoading(false); // Set loading to false
