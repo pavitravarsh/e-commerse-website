@@ -10,7 +10,7 @@ function ProductsSection() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/products")
+      .get("https://snail-backend.onrender.com")
       .then((response) => {
         setProducts(response.data);
         setLoading(false);
