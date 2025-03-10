@@ -32,9 +32,12 @@ const Navbar = ({ cartItemCount = 0 }) => {
     return () => unsubscribe();
   }, []);
 
+  useEffect(() => {
+    console.log("Cart Items Count:", cartItemCount); // Debugging
+  }, [cartItemCount]);
+
   const handleSearch = (e) => {
     e.preventDefault();
-    console.log("Searching for:", query);
     navigate(`/search?q=${query}`);
   };
 
@@ -121,9 +124,8 @@ const Navbar = ({ cartItemCount = 0 }) => {
         {/* Cart Icon */}
         <div className="cart-icon" onClick={() => navigate("/cart")}>
           <i className="fa fa-shopping-cart"></i>
-          {cartItemCount > 0 && (
-            <span className="cart-badge">{cartItemCount}</span>
-          )}
+          <span className="cart-badge">{cartItemCount}</span>{" "}
+          {/* Always visible */}
         </div>
 
         {/* Account Container (Dropdown) */}

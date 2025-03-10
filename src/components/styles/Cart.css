@@ -1,0 +1,83 @@
+/* Cart.css */
+
+.cart-container {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.cart-title {
+  font-size: 24px;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.cart-empty {
+  font-size: 18px;
+  color: #777;
+}
+
+.cart-items {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.cart-item h3 {
+  font-size: 18px;
+  color: #444;
+  margin: 0;
+}
+
+.cart-item p {
+  font-size: 16px;
+  color: #666;
+  margin: 0;
+}
+
+.cart-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.cart-button {
+  padding: 8px 15px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.remove-button {
+  background-color: #ff4d4d;
+  color: white;
+}
+
+.remove-button:hover {
+  background-color: #d63333;
+}
+
+.clear-button {
+  background-color: #333;
+  color: white;
+}
+
+.clear-button:hover {
+  background-color: #222;
+}

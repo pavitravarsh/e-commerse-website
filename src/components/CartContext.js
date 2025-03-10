@@ -28,17 +28,9 @@ export const CartProvider = ({ children }) => {
     });
   };
 
-  // Remove a product from the cart
+  // Remove a product from the cart completely
   const removeFromCart = (productId) => {
-    setCart((prevCart) =>
-      prevCart
-        .map((item) =>
-          item._id === productId
-            ? { ...item, quantity: item.quantity - 1 }
-            : item
-        )
-        .filter((item) => item.quantity > 0)
-    );
+    setCart((prevCart) => prevCart.filter((item) => item._id !== productId));
   };
 
   // Clear the entire cart
