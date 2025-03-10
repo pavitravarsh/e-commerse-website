@@ -64,12 +64,16 @@ const ProductDetails = () => {
         <p className="description">
           {product.description || "No description available."}
         </p>
-        <button onClick={handleAddToCart}>Add to Cart</button>
+        <button onClick={handleAddToCart} className="add-to-cart-btn">
+          Add to Cart
+        </button>
       </div>
 
       {/* Popup Message */}
       {showPopup && (
-        <div className="cart-popup">{product.name} added to cart!</div>
+        <div className="cart-popup">
+          <p>{product.name} added to cart! 🛒</p>
+        </div>
       )}
     </div>
   );

@@ -127,12 +127,14 @@ form input::placeholder {
   position: relative;
   cursor: pointer;
   margin-right: 20px;
+  user-select: none;
 }
 
 .cart-icon i {
   font-size: 20px;
   color: #856135; /* Matches the theme */
   transition: color 0.3s ease;
+  pointer-events: none;
 }
 
 .cart-icon:hover i {
