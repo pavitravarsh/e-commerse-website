@@ -2,13 +2,17 @@ import React, { useState, useEffect, useRef } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import app from "./firebaseConfig";
+import { useCart } from "./CartContext"; // Import useCart
 import "./styles/Navbar.css";
 
-const Navbar = ({ cartItemCount = 0 }) => {
+const Navbar = () => {
   const [query, setQuery] = useState("");
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [userName, setUserName] = useState(null);
   const [userInitial, setUserInitial] = useState(null);
+
+  const { cart } = useCart(); // Get cart from context
+  const cartItemCount = cart.reduce((total, item) => total + item.quantity, 0); // Calculate total cart items
 
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
@@ -31,10 +35,6 @@ const Navbar = ({ cartItemCount = 0 }) => {
 
     return () => unsubscribe();
   }, []);
-
-  useEffect(() => {
-    console.log("Cart Items Count:", cartItemCount); // Debugging
-  }, [cartItemCount]);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -124,8 +124,9 @@ const Navbar = ({ cartItemCount = 0 }) => {
         {/* Cart Icon */}
         <div className="cart-icon" onClick={() => navigate("/cart")}>
           <i className="fa fa-shopping-cart"></i>
-          <span className="cart-badge">{cartItemCount}</span>{" "}
-          {/* Always visible */}
+          {cartItemCount > 0 && (
+            <span className="cart-badge">{cartItemCount}</span>
+          )}
         </div>
 
         {/* Account Container (Dropdown) */}
