@@ -24,8 +24,9 @@ pipeline {
             aws configure set aws_secret_access_key %AWS_SECRET%
             aws configure set region ${AWS_REGION}
 
+            REM use quoted paths and no trailing backslashes
             REM sync build folder to S3, make each object public
-            aws s3 sync build\\ s3://${S3_BUCKET}\\ --delete --acl public-read
+            aws s3 sync "build" "s3://${S3_BUCKET}" --delete --acl public-read
           """
         }
       }
